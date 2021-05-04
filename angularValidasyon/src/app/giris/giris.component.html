@@ -1,0 +1,32 @@
+<div class="form1">
+    <div>
+        Adı:
+    </div>
+    <div>
+        <input type="text" class="form-control" [class.is-invalid]="isim.invalid && isim.touched" required #isim="ngModel" [(ngModel)]="adi" />
+        <div *ngIf="isim.invalid && isim.touched"><small class="text-danger">Adı alanı boş geçilemez</small></div>
+    </div>
+    <div>
+        Email:
+    </div>
+    <div>
+        <input type="text" class="form-control" #eposta="ngModel" [(ngModel)]="email" required [class.is-invalid]="eposta.invalid && eposta.touched" />
+        <div *ngIf="eposta.invalid && eposta.touched"><small class="text-danger">EPosta alanı boş geçilemez</small></div>
+    </div>
+    <div>
+        İlgilendiğiniz programlama dili:
+    </div>
+    <div>
+        <select class="custom-select" formControlName="programlamaDili">
+         <option value="0">Bir Dil Seçiniz...</option>
+        <option value="1">R</option>
+        <option value="2">java</option>
+        <option value="3">Typescript</option>
+        <option value="4">Ruby</option>
+        <option value="5">Perl</option>
+        <option value="6">Pyton</option>
+      </select>
+        <input type="text" class="form-control" />
+    </div>
+</div>
+<button class="btn btn-primary">Giriş Yap</button>

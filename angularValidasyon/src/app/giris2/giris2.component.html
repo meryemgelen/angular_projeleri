@@ -1,0 +1,75 @@
+reactiveform olarak çalışan form
+<form [formGroup]="girisForm">
+    <div class="form1">
+        <div class="my-2">
+            Adı:
+        </div>
+        <div>
+            <input type="text" class="form-control" formControlName="adi" [class.is-invalid]="adi.invalid && adi.touched" required />
+            <div *ngIf="adi.invalid && adi.touched"><small class="text-danger">adı alanı boş geçilemez</small></div>
+        </div>
+        <div class="my-2">
+            Email:
+        </div>
+        <div>
+            <input type="text" class="form-control" formControlName="eposta" required [class.is-invalid]="eposta.invalid && eposta.touched" minlength="3" pattern=".+@.+\..{2,4}$" />
+            <div *ngIf="eposta.invalid && eposta.touched">
+                <div *ngIf="eposta.errors?.required"><small class="text-danger">email alanı boş geçilemez</small></div>
+                <div *ngIf="eposta.errors?.minlength"><small class="text-danger">email alanı en az
+            {{eposta.errors.minlength.requiredLength}}karakter gerekiyor</small></div>
+                <div *ngIf="eposta.errors?.pattern"><small class="text-danger">email alanı düzgün görünmüyor</small></div>
+            </div>
+        </div>
+        <div class="my-2">
+            Email(Tekrar):
+        </div>
+        <div>
+            <input id="epostaTekrar" type="text" class="form-control" onPaste="return false" formControlName="eposta2" required [class.is-invalid]="eposta2.invalid && eposta2.touched" />
+            <div *ngIf="eposta2.errors">
+                <small class="text-danger">EPosta(tekrar) alanına {{eposta.value}} yazmalısınız.</small>
+            </div>
+        </div>
+        <div class="my-2">
+            İlgilendiğiniz programlama dili:
+        </div>
+        <div>
+            <select formControlName="programlamaDili" class="custom-select">
+        <option value="0">Bir dil seçiniz...</option>
+        <option value="1">R</option>
+        <option value="2">Java</option>
+        <option value="3">Typescripts</option>
+        <option value="4">Ruby</option>
+        <option value="5">Perl</option>
+        <option value="6">Pyton</option>
+      </select>
+            <div *ngIf="programlamaDili.invalid && programlamaDili.touched">
+                <small class="text-danger">{{programlamaDili.errors.hata}}</small>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="adresler.length!==0">
+        Adresler:
+    </div>
+    <div class="d-flex" formArrayName="adresler" *ngFor="let sira of adresler.controls;let i=index">
+        <div>
+            <input class="form-control my-1" type="text" [formControlName]="i" />
+
+        </div>
+        <div class="d-flex align-items-center">
+            <i (click)="adresSil(i)" class="fas fa-trash-alt"></i>
+        </div>
+    </div>
+
+
+
+    <div><button class="btn btn-primary my-2" (click)="adresEkle()">AdresEkle</button></div>
+    <div *ngIf="girisForm.errors?.hata">
+        {{girisForm.errors.hata}}
+    </div>
+    <br>
+    <button class="btn btn-primary" [disabled]="girisForm.untouched ||girisForm.invalid">giriş yap</button>
+
+</form>
